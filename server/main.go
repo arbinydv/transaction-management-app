@@ -28,7 +28,7 @@ func main() {
 	// router.Use(cors.Default()) // CORS attack prevention
 
 	// API END POINTS
-	// healthCheck
+	// health check aopu using gin framework
 
 	router.Run(":" + port)
 
