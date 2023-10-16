@@ -2,23 +2,36 @@ package main
 
 import (
 	"fmt"
-	"log"
+	"os"
 
-	"github.com/gofiber/fiber/v2"
+	"github.com/arbinydv/server/api"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	fmt.Println("Hello App!")
 
-	// creating a Go App
-	app := fiber.New()
+	// port
 
-	// HealthCheck and port assigment
+	port := os.Getenv("PORT")
 
-	app.Get("/healthcheck", func(ctx *fiber.Ctx) error {
-		return ctx.SendString("OK")
-	})
+	if port == "" {
+		port = "4000"
+	}
 
-	// Listen to Port
-	log.Fatal(app.Listen(":4000"))
+	// api setup
+	router := gin.New()
+
+	router.Use(gin.Logger())
+
+	// router.Use(cors.Default()) // CORS attack prevention
+
+	// API END POINTS
+	// healthCheck
+
+	router.Run(":" + port)
+
+	router.GET("/healthcheck", api.HealthCheck)
+
 }
