@@ -2,36 +2,46 @@ package main
 
 import (
 	"fmt"
-	"os"
-
-	"github.com/arbinydv/server/api"
-
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"os"
+	"transaction-management-app/api"
+	"transaction-management-app/model"
 )
 
 func main() {
 	fmt.Println("Hello App!")
 
-	// port
-
+	// Port
 	port := os.Getenv("PORT")
-
 	if port == "" {
 		port = "4000"
 	}
 
-	// api setup
-	router := gin.New()
+	router := gin.Default()
+	router.Use(cors.Default()) // Enable CORS
 
-	router.Use(gin.Logger())
+	// Database setup
+	db, err := model.SetupDB()
+	if err != nil {
+		fmt.Println("Failed connecting to the database:", err)
+	}
+	defer db.Close()
 
-	// router.Use(cors.Default()) // CORS attack prevention
+	// Set db key for the API endpoint
+	router.Use(func(c *gin.Context) {
+		c.Set("db", db)
+	})
 
-	// API END POINTS
-	// health check aopu using gin framework
+	// Define your API endpoints and handlers
+	router.GET("/transactions", api.GetTransactions)
+	router.GET("/transactions/:id", api.GetTransactionById)
+	router.POST("/transaction/create", api.AddTransaction)
 
-	router.Run(":" + port)
-
-	router.GET("/healthcheck", api.HealthCheck)
+	// Run the server
+	err = router.Run(":" + port)
+	if err != nil {
+		fmt.Println("Server failed to start:", err)
+	}
 
 }
