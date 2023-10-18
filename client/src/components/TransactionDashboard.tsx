@@ -1,4 +1,4 @@
-import { Box, Spinner, Grid, GridItem, ChakraProvider } from '@chakra-ui/react';
+import {Spinner, Grid, GridItem, ChakraProvider } from '@chakra-ui/react';
 import useSWR from 'swr';
 import theme from './theme';
 import Sidebar from './SideBar';
@@ -15,7 +15,7 @@ interface Transaction {
 const fetcher = (url: string) =>
   fetch(`${ENDPOINT}/${url}`).then((response) => response.json()).then((data) => data.data);
 
-function TransactionTable() {
+function TransactionDashboard() {
   const { data, error } = useSWR<Transaction[]>('transactions', fetcher);
 
   if (error) {
@@ -24,18 +24,16 @@ function TransactionTable() {
 
   return (
     <ChakraProvider theme={theme}>
-      <Box>
-        <Grid
-          templateAreas={`"nav main"`}
-          templateColumns='1fr 3fr'>
+      <Grid templateColumns="250px 1fr" minH="100vh">
+        <GridItem>
           <Sidebar />
-          <GridItem bg='white'>
-            {data ? <Dashboard data={data} /> : <Spinner />}
-          </GridItem>
-        </Grid>
-      </Box>
+        </GridItem>
+        <GridItem  bg="white">
+          {data ? <Dashboard data={data} /> : <Spinner />}
+        </GridItem>
+      </Grid>
     </ChakraProvider>
   );
 }
 
-export default TransactionTable;
+export default TransactionDashboard;
