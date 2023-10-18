@@ -16,7 +16,7 @@ import { FiArrowLeftCircle, FiCalendar, FiCreditCard, FiDollarSign, FiSend } fro
 interface Transaction {
   id: number;
   date: string;
-  amount: number;
+  amount: string;
   sender: string;
   receiver: string;
   paymentMethod: string;
@@ -53,7 +53,8 @@ function TransactionTable({ data, openModal }: TransactionTableProps) {
   };
 
   const excludedColumns = ['CreatedAt', 'UpdatedAt', 'DeletedAt','ID'];
-  const keys = Object.keys(data[0]).filter((key) => !excludedColumns.includes(key));
+  const keys = data && data.length > 0 ? Object.keys(data[0]).filter((key) => !excludedColumns.includes(key)) : [];
+
   const avatarColors = ["teal.500", "green.500", "blue.500", "purple.500", "orange.500"];
 
   const getRandomColor = () => {
@@ -63,8 +64,8 @@ function TransactionTable({ data, openModal }: TransactionTableProps) {
 
   function formatDate(inputDate: string) {
     const date = new Date(inputDate);
-    const options = { month: 'short', day: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
+    const formatOptions: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
+    return date.toLocaleDateString('en-US', formatOptions);
   }
   return (
     <Table marginLeft="10px" mx="8">

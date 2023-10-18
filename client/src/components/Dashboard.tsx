@@ -10,14 +10,14 @@ import { useState } from "react";
 interface Transaction {
   id: number;
   date: string;
-  amount: number;
+  amount: string;
   sender: string;
   receiver: string;
   paymentMethod: string;
   attachment?: string;
 }
 
-function Dashboard({ data }: { data: Transaction[] }) {
+function BuildDashboard({ data }: { data: Transaction[] }) {
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -42,4 +42,4 @@ function Dashboard({ data }: { data: Transaction[] }) {
   );
 }
 
-export default Dashboard;
+export default BuildDashboard;
