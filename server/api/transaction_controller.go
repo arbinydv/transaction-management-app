@@ -1,11 +1,12 @@
 package api
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	"net/http"
 	"time"
 	"transaction-management-app/model"
+
+	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 )
 
 type AddTransactionInput struct {
@@ -31,7 +32,6 @@ func GetTransactions(c *gin.Context) {
 }
 
 func GetTransactionById(c *gin.Context) {
-	// Your code to retrieve a transaction by ID
 	var transaction model.Transaction
 
 	db := c.MustGet("db").(*gorm.DB)
@@ -47,12 +47,11 @@ func AddTransaction(c *gin.Context) {
 
 	var payload AddTransactionInput
 
-	// Handle request error
 	if err := c.ShouldBindJSON(&payload); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	// Parse the date
+
 	dateLayout := "2006-01-02T15:04:05Z"
 	timestamp, err := time.Parse(dateLayout, payload.Date)
 	if err != nil {

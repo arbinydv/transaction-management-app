@@ -1,43 +1,52 @@
-
-
-## Repo Creation
-
-## Backend OR Server App 
- 1.  go mod init github.com/arbinydv/transaction-management-app
- `Add fiber for web framework in go`
-  -  go get -u github.com/gofiber/fiber/v2
-## Frontend OR Client App
-  `Using VITE as app and browser bundler`
-  - yarn create vite client  -- --template react-ts // to use vite with react and typescript template for frontend
-  ` Using chakra-ui for components and Ag-GRID for dashboard`
- - yarn add @chakra-ui/react @emotion/react @emotion/styled framer-motion
-  ` Ag grid community installation`
-  - npm install --save ag-grid-community 
-  - npm install --save ag-grid-react
-
-
 ## Getting App up and running 
-  - Inside Go 
-    - use fiber to create app and assign port 
+  - Ensure your Database is connected and running 
+  - Inside server 
+    - go run main.go
+### CRUD Operations
+Add Transaction
+```
+Endpoint: `localhost:4000/transaction/create`
+TYPE: POST
+
+API Body
+  
+  {
+     "date": "2023-10-18T22:30:00Z",
+      "sender": "Dummy Sender",
+      "receiver": "Dummy receiver ",
+      "amount": "$4,400.56",
+      "account": "Savings",
+      "paymentMethod": "Paypal"
+  }
+```
+
+List  Transaction 
+```
+Endpoint: `localhost:4000/transactions`
+TYPE: GET
+
+API Response
+  
+{
+    "data": [
+        {
+            "ID": 1,
+            "CreatedAt": "2023-10-17T10:17:25+05:45",
+            "UpdatedAt": "2023-10-17T10:17:25+05:45",
+            "DeletedAt": null,
+            "date": "2023-10-17T17:45:00+05:45",
+            "sender": "Dummy Sender",
+            "receiver": "Dummy receiver ",
+            "amount": "$4,400.56",
+            "account": "Savings",
+            "paymentMethod": "Paypal"
+        },
+    ]
+}
+```
 
 
-### GIT REPO PUSH 
-echo "# transaction-management-app" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/arbinydv/transaction-management-app.git
-git push -u origin main
 
-
-
-
-
-## 
-
-I have a go project 
-server
 
 
 
