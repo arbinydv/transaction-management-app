@@ -3,6 +3,10 @@
 #### Full Stack Single Page Application to show list of trasactions on a Dashboard.
 ![Alt text](image-1.png)
 
+#### Transaction Detail 
+![image](https://github.com/arbinydv/transaction-management-app/assets/106106915/5f9e5b0c-b21f-4935-ad33-514a55b80071)
+
+
 
 ## Overview 📋
 This project leverages CRUD concepts in the `Golang`, `ReactJs`, and `MySQL` tech stack to fetch data from database and visualize them on a Dashboard. 
