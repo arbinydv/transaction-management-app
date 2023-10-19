@@ -79,7 +79,7 @@ function TransactionDetail({
               From {selectedTransaction.sender}
             </Text>
             <Flex direction="column" mx="6">
-              <span>{selectedTransaction.account}</span>
+              <span>{selectedTransaction.paymentMethod}</span>
               <span>{formatDateTime(selectedTransaction.date)}</span>
             </Flex>
             <Text fontWeight="bold" fontSize="lg" fontFamily="monospace">
