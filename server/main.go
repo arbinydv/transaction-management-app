@@ -13,20 +13,22 @@ import (
 )
 
 func main() {
+	if err := godotenv.Load(); err != nil {
+		log.Fatalf("Error loading .env file: %v", err)
+	}
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "4000"
+	var defaultConfig = &model.Config{
+		User:     os.Getenv("DB_USER"),
+		Password: os.Getenv("DB_PASSWORD"),
+		Host:     os.Getenv("DB_HOST"),
+		Port:     os.Getenv("DB_PORT"),
+		DBName:   os.Getenv("DB_NAME"),
 	}
 
 	router := gin.Default()
 	router.Use(cors.Default())
 
-	if err := godotenv.Load(); err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
-	}
-
-	db, err := model.SetupDB()
+	db, err := model.SetupDB(*defaultConfig)
 	if err != nil {
 		fmt.Println("Failed connecting to the database:", err)
 	}
@@ -41,7 +43,7 @@ func main() {
 	router.GET("/transactions/:id", api.GetTransactionById)
 	router.POST("/transaction/create", api.AddTransaction)
 
-	err = router.Run(":" + port)
+	err = router.Run()
 	if err != nil {
 		fmt.Println("Server failed to start:", err)
 	}
